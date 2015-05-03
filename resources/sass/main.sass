@@ -1,21 +1,4 @@
-$primaryBlue: #25AAE0
-$primaryFont: "Helvetica Neue",Helvetica,Arial,sans-serif
-$borderGray: #dadada
-$linkColor: #25AAE0
-$linkHoverColor: #f19a0e
-$primaryRed: #f05724
-$primaryFont: 'Knockout29'
-$altFont: "Helvetica Neue",Helvetica,Arial,sans-serif
-$maxPageWidth: 1080px
-$mobileNavbarHeight: 50px
-$navbarHeight: 60px
-
-
-
-@font-face
-  font-family: 'Knockout29'
-  src: url('fonts/Knockout/Knockout-29.otf')
-  src: local("?"), url('fonts/Knockout/Knockout-29.otf') format("truetype")
+@import 'variables'
 @import 'mixins'
 @import 'footer'
 @import 'notifications'
@@ -108,11 +91,3 @@ body > .container
   float: right
   clear: both
   margin: 10px 10px
-
-
-  /** In app **/
-.til-search
-  overflow: hidden
-  input
-    float: left
-    width: 75% 
