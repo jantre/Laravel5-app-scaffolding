@@ -1,0 +1,118 @@
+$primaryBlue: #25AAE0
+$primaryFont: "Helvetica Neue",Helvetica,Arial,sans-serif
+$borderGray: #dadada
+$linkColor: #25AAE0
+$linkHoverColor: #f19a0e
+$primaryRed: #f05724
+$primaryFont: 'Knockout29'
+$altFont: "Helvetica Neue",Helvetica,Arial,sans-serif
+$maxPageWidth: 1080px
+$mobileNavbarHeight: 50px
+$navbarHeight: 60px
+
+
+
+@font-face
+  font-family: 'Knockout29'
+  src: url('fonts/Knockout/Knockout-29.otf')
+  src: local("?"), url('fonts/Knockout/Knockout-29.otf') format("truetype")
+@import 'mixins'
+@import 'footer'
+@import 'notifications'
+
+
+ul
+  list-style: none
+  padding: 0px
+.border-bottom
+  border-bottom: 1px solid $borderGray
+  height: 2px
+
+.panel-info
+  input[type='text'],input[type='password']
+    width: 100%
+    margin: 4px 0px
+  input[type='submit']
+    float: right
+    min-width: 40%
+.panel-footer-white
+  background-color: white
+
+/* Required for footer to be pushed to bottom*/
+
+html
+  position: relative
+  min-height: 100%
+body
+  margin-bottom: 60px
+/* End footer requirements */
+
+.center-block
+  float: none 
+
+.link
+  color: $linkColor !important
+  &:hover
+    color: $linkHoverColor !important
+    -webkit-transition: color 0.33s
+    transition: color 0.33s
+    cursor: pointer
+  a
+    text-decoration: none
+    color: $linkColor
+
+body > .container 
+  padding: 20px 15px 0
+  overflow-x: hidden
+
+.navbar-default
+  background-color: #fff
+.navbar
+  .login-form-wrapper
+    margin-top: 5px
+    float: right
+    input[type='text'],input[type='password']
+      width: 160px
+      float: left
+      margin-right: 7px
+    input[type='checkbox']
+      width: auto !important
+    .form-signin-heading
+      display: none
+    .links
+      float: left
+      div
+        width: 165px
+        display: inline-block
+      .remembermewrapper
+        float: none
+        margin: 0px
+        clear: none
+  .dropdown-toggle
+    cursor: pointer
+  .navbar-nav
+    /* Override bootstrap's default min-width: 160 */
+    min-width: 0px !important
+    .list-group-item
+      border: 0px
+  .dropdown-menu-right
+    float: right
+    margin-top: 20px
+    font-size: 17px
+    margin-right: 60px
+  .navbar-toggle-left
+    float: left
+    margin-left: 15px
+
+.remembermewrapper
+  float: right
+  clear: both
+  margin: 10px 10px
+
+
+  /** In app **/
+.til-search
+  overflow: hidden
+  input
+    float: left
+    width: 75% 

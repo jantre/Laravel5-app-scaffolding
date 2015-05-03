@@ -24,7 +24,7 @@
       <div class="panel-body">
         @include('user.login_form')
       </div>
-      <div class="panel-footer">Don't have an account?  {{ HTML::link('signup','Signup') }}</div>
+      <div class="panel-footer">Don't have an account?  {!! HTML::link('signup','Signup') !!}</div>
     </div>
   </div>
 </div>

@@ -1,0 +1,109 @@
+/* Mobile */
+.navbar
+  height: 50px
+  text-align: center
+  font-family: $altFont
+
+.navbar-brand
+  padding-top: 10px
+  font-size: 26px
+  a
+    color: $primaryRed !important
+    img
+      width: 100px 
+
+.header-login
+  float: right
+  .link
+    margin-top: -3px
+  div
+    float: left
+  input
+    border: 2px solid $borderGray
+.login-form-block
+  display: none
+.landing-login-form-block
+  padding-top: $mobileNavbarHeight+80px
+  input
+    margin-bottom: 15px
+  input[type="text"],input[type="password"]
+    width: 80%
+    height: 30px
+  .links
+    li
+      margin-top: 25px
+      margin-bottom: 25px
+  .submit-button
+    width: 80%
+    font-size: 20px
+    padding: 5px
+  .signup-button
+    margin-top: 30px
+  .form-title
+    display: none !important
+
+
++respond-to(desktop)
+  .landing-login-form-block,.login-form-block
+    padding-top: 0px
+    display: block !important
+    margin-top: 0px
+    float: right
+    input
+      margin: 0
+    input[type="text"],input[type="password"]
+      width: 155px
+      height: auto
+    .form-title
+      display: none !important
+    .submit-button
+      width: auto
+      font-size: 13px
+      padding: 3px 7px
+    .signup-button
+      display: none
+    ul
+      margin-top: -5px
+      li
+        width: 160px
+        display: inline
+        float: left
+        margin-right: 3px
+      .login
+        width: auto !important
+    .links
+      li
+        margin-top: 0px
+        margin-bottom: 0px
+  .navbar
+    font-family: $altFont
+    text-align: left
+    margin: auto
+    padding: 5px
+    height: $navbarHeight
+    max-width: $maxPageWidth
+  .navbar-brand
+    display: block
+    float: left
+    margin-left: 20px
+
+
+  #user-menu-wrapper
+    float: right
+    font-size: 24px
+
+  #user-menu
+    list-style: none
+    text-align: center
+    ul
+      padding: 0
+      display: none
+      list-style: none
+      text-align: center
+      font-size: 20px
+      z-index: 100
+    &:hover ul
+      display: block
+    ul li
+      border-bottom: 1px solid $borderGray
+      line-height: 32px
