@@ -98,14 +98,14 @@ class UserController extends Controller {
         $message->to(Input::get('email'), Input::get('username'))->subject('Verify your email address');
         Session::flash('success','Thanks for signing up! Please check your email to complete the registration process.');
       });
-      return Redirect::home();
     }else{
       // NO EMAIL VERIFICATION ( NOT RECOMMENDED FOR PRODUCTION)
       $user['status'] = 1;
       User::create($user);
       // Authenticate the user automatically since verification is not required.
-      Redirect::route('autologin',array('email'=>Input::get('email'),'password'=>Input::get('password')));
+      Auth::attempt(array('email'=>Input::get('email'),'password'=>Input::get('password')));
     }
+    return Redirect::home();
   }
 
   /*

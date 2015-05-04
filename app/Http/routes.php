@@ -95,6 +95,8 @@ Route::get('register', function()
 {
   return Redirect::to('/signup');
 });
+
+// Redirect auth/login to just /login so we don't have to change app/Http/Middleware/Authenticate.php
 Route::get('auth/login',function()
 {
   return Redirect::to('/login');
