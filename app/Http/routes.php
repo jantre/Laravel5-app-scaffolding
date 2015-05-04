@@ -27,3 +27,75 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
 
 }
 ));
+
+/** Pages that can be visited as guest only **/
+Route::group(array('before' => 'guest'), function()
+{
+  Route::get('login', [
+    'as'=>'login',
+    'uses'=>'UserController@getLogin'
+    ]);
+  Route::post('login', 'UserController@postLogin');
+
+  Route::get('forgotpassword', [
+    'as'=>'forgotpassword',
+    'uses'=>'UserController@getForgotpassword'
+  ]);
+  Route::post('forgotpassword', 'UserController@postForgotpassword');
+
+  Route::get('signup',[
+    'as'=>'signup',
+    'uses'=>'UserController@getRegister'
+    ]);
+  Route::post('signup', 'UserController@postRegister');
+
+  Route::get('password/reset/{token}', 'RemindersController@getReset');
+  Route::post('password/reset/{token}','RemindersController@postReset');
+  Route::get('register/verify/{confirmationCode}', [
+    'as' => 'confirmation_path',
+    'uses' => 'UserController@confirm'
+  ]);
+});
+
+Route::group(array('before' => 'auth'), function()
+{
+  Route::get('/user/profile',function()
+  {
+    return View::make('user.settings.profile');
+  });
+
+  Route::get('/user/change-password',function()
+  {
+    return View::make('user.settings.changepassword');
+  });
+  Route::post('/user/change-password','UserController@postChangePassword');
+  /* Ajax forms to handle form submisison*/
+  Route::get('/user/settings/ajax/forms/{page}',function($page)
+  {
+     return View::make('user.settings.'.$page);
+  });
+
+  Route::controller('app', 'AppController');
+
+  Route::post('/user/profile','UserController@postProfile');
+
+
+});
+
+
+//Route::get('user/profile/{username}','UserController@viewProfile');
+
+
+Route::get('logout','UserController@getlogout');
+
+
+
+/* alias to sign up page */
+Route::get('register', function()
+{
+  return Redirect::to('/signup');
+});
+Route::get('auth/login',function()
+{
+  return Redirect::to('/login');
+});
