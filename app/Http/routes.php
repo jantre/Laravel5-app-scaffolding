@@ -18,7 +18,7 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
     return Redirect::to('/app/main');
   }
   //TODO: Something to look into here.
-  //From the forgot pwd page we can't seem to pass back
+  //From the forgot password page we can't seem to pass back
   //$success unless we do it this way.
   if(empty($success)){
     return View::make('landing');

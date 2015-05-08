@@ -165,14 +165,17 @@ class UserController extends Controller {
         return Redirect::home();
 
       }
-
       $user->status = 1;
       $user->confirmation_code = null;
       $user->save();
-
-      Session::flash('success','You have successfully verified your account. Please log in');
-
-      return Redirect::to('login');
+      Auth::login($user);
+      if (Auth::check()){
+        //Session::flash('success','You have successfully verified your account.');
+        return Redirect::to('/app/main')->with('success','You have successfully verified your account. Enjoy!');
+      }else{
+        // If for some reason we were not able to log the user in while they verfied their account.
+        return Redirect::to('login')->with('success','You have successfully verified your account. Please log in');
+      }
   }
 
 
