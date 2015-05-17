@@ -12,7 +12,7 @@
         <h3 class="panel-title">Sign up</h3>
       </div>
       <div class="panel-body">
-        @include('user.register_form')
+        @include('forms.register_form')
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
         <h3 class="panel-title">Sign In</h3>
       </div>
       <div class="panel-body">
-        @include('user.login_form')
+        @include('forms.login_form')
       </div>
       <div class="panel-footer">Don't have an account?  {!! HTML::link('signup','Signup') !!}</div>
     </div>
