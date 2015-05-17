@@ -2,10 +2,7 @@
   <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand hidden-xs" href="/"><span class='link'>Laravel Application</span></a>
-      @if(!Auth::check() && substr($_SERVER['REQUEST_URI'],0,6)!='/login')
-    </div> <!-- navbar-header -->
-        <div class='hidden-xs login-form-wrapper'>@include('user.login_form')</div>
-      @elseif(Auth::check())
+      <div>
         <button type="button" class="navbar-toggle navbar-toggle-left collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -23,7 +20,7 @@
           </ul>
           <div class="dropdown dropdown-menu-right hidden-xs">
             <div class="dropdown-toggle link hidden-xs" type="button" data-toggle="dropdown" aria-expanded="true">
-              {!! Auth::user()->username !!}
+              {{ Auth::user()->username }}
               <span class="caret"></span>
             </div>
             <ul class="dropdown-menu" role="menu">
@@ -31,6 +28,5 @@
             </ul>
           </div>
        </div><!--collapse-->
-      @endif
   </div><!-- container -->
 </nav>

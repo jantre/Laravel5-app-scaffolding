@@ -12,11 +12,15 @@
       {!! HTML::style('css/main.css') !!}
   </head>
   <body>
-    @include('navbar')
+    @if(Auth::check())
+      @include('navbar.authenticated')
+    @else
+      @include('navbar.anonymous')
+    @endif
     <div class='container'>
       @include('notifications')
       @yield('content')
     </div>
     @include('footer')
   </body>
-</html> 
+</html>
