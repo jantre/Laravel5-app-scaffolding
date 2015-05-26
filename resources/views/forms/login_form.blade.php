@@ -12,7 +12,7 @@
     <input type="checkbox" name='rememberme' value="rememberme" class='remembermechk' checked='checked'><span class='link remembermespan'> Remember me</span>
   </div>
   <div>
-    <a href='/forgotpassword' class='link'>Forgot Password?</a>
+    <a href='/password/forgot' class='link'>Forgot Password?</a>
   </div>
 </div>
- 
+

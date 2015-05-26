@@ -1,5 +1,4 @@
-<?php
-namespace app\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use Response;
 use Input;
@@ -12,13 +11,13 @@ use Session;
 use App\Models\User;
 use App\Http\Requests\UserFormRequest;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
 
   public function getLogin()
   {
     return view('user.login');
   }
-
 
   /*
   * Clear authentication and session information
@@ -29,33 +28,6 @@ class UserController extends Controller {
     Auth::logout(); //logout the current user
     Session::flush(); //delete the session
     return Redirect::to('/'); //redirect to login page
-  }
-
-  public function getForgotpassword(){
-    return view('password.remind');
-  }
-
-  public function postForgotpassword(){
-    //TODO:  Validate that an email address was given.
-    $email=trim(Input::get('email'));
-    if(empty($email)){
-      return Redirect::to('/forgotpassword')->withErrors('The email field is required.');
-    }
-    if(!$this->checkEmailRegistered($email)){
-      return Redirect::to('/forgotpassword')->withErrors($email.' is not registered with us. Would you like to <a href=\'/signup\'>Sign up</a>?');
-    }
-        switch ($response = Password::remind(Input::only('email')))
-    {
-      case Password::INVALID_USER:
-        return Redirect::to('login')->with('error', Lang::get($response));
-
-      case Password::REMINDER_SENT:
-        Session::Flash('success','Please check your email for password reset instructions.');
-        return Redirect::to('login')->withInput(array('email'=>Input::get('email')));
-    }
-  }
-  public function getRegister(){
-    return view('user.register');
   }
 
   /*
@@ -88,7 +60,8 @@ class UserController extends Controller {
       'password' => Hash::make(Input::get('password'))
     ];
 
-    if(!env('REGISTRATION_SKIP_VERIFICATION',0)){
+    if(!env('REGISTRATION_SKIP_VERIFICATION',0))
+    {
       $confirmation_code = str_random(30);
       $user['confirmation_code'] = $confirmation_code;
       // TODO:  the user create function here and below are repetative. Perhaps use an event trigger to clean this up.
@@ -98,7 +71,9 @@ class UserController extends Controller {
         $message->to(Input::get('email'), Input::get('username'))->subject('Verify your email address');
         Session::flash('success','Thanks for signing up! Please check your email to complete the registration process.');
       });
-    }else{
+    }
+    else
+    {
       // NO EMAIL VERIFICATION ( NOT RECOMMENDED FOR PRODUCTION)
       $user['status'] = 1;
       User::create($user);
@@ -179,11 +154,14 @@ class UserController extends Controller {
   }
 
 
-  public function postProfile(){
-    if(!Auth::user()){
+  public function postProfile()
+  {
+    if(!Auth::user())
+    {
       return Redirect::back()->withInput()->withErrors('error','D\'oh! Something went wrong. If the problem persists please log out and log back in then try again.');
     }
-    if(Auth::user()->email != Input::get('email')){
+    if(Auth::user()->email != Input::get('email'))
+    {
       $rules = ['email' => 'required|email|unique:users'];
       $validator = Validator::make(array('email'=>Input::get('email')), $rules);
       if($validator->fails())
@@ -202,7 +180,8 @@ class UserController extends Controller {
     return Redirect::to('/app/main');
   }
 
-  public function postChangePassword(){
+  public function postChangePassword()
+  {
     $rules = ['currentpass' => 'required|min:6',
               'newpass' => 'required|min:6',
               'confirm-newpass' => 'required|min:6'
@@ -212,13 +191,16 @@ class UserController extends Controller {
     {
       return Redirect::back()->withInput()->withErrors($validator);
     }
-    if(Input::get('newpass')!=Input::get('confirm-newpass')){
+    if(Input::get('newpass')!=Input::get('confirm-newpass'))
+    {
       return Redirect::back()->withInput()->withErrors("New Passwords and Confirm Password fields do not match. Please try again.");
     }
-    if(!Hash::check(Input::get('currentpass'), Auth::user()->getAuthPassword())){
+    if(!Hash::check(Input::get('currentpass'), Auth::user()->getAuthPassword()))
+    {
       return Redirect::back()->withInput()->withErrors("Current password is incorrect. Please Try again.");
     }
-    if(!Auth::user()){
+    if(!Auth::user())
+    {
       Session::flash('error','D\'oh! Something went wrong. If the problem persists please log out and log back in then try again.');
       return view('user.settings.profile');
     }
@@ -226,22 +208,4 @@ class UserController extends Controller {
     Auth::user()->save();
     return Redirect::back()->withSuccess('Password has been changed!');
   }
-  /*********************
-  ** HELPER FUNCTIONS **
-  **********************/
-  
- 
-  /*
-  *  Function that checks to see if the user exists in our system.
-  */
-  private function checkEmailRegistered($email){
-    if(sizeof(User::where('email','=',$email)->get()) > 0){
-      // email has been registered.
-      return 1;
-    }else{
-      //email has not been registered
-      return 0;
-    }
-  }
-
 }//end class

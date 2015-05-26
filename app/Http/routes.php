@@ -11,9 +11,12 @@
 |
 */
 
+
 Route::get('/', array('as'=>'home', 'uses'=> function()
 {
   // If the user is already logged in, redirect them into the app.
+  // TODO: The route file is probably not the best place to handle this.
+  //       Look into it.
   if(Auth::check()){
     return Redirect::to('/app/main');
   }
@@ -24,37 +27,42 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
     return View::make('landing');
   }
   return View::make('landing')->with('success',$success);
-
-}
-));
+}));
 
 /** Pages that can be visited as guest only **/
 Route::group(array('before' => 'guest'), function()
 {
+  /*
+  * Login routes
+  */
   Route::get('login', [
     'as'=>'login',
     'uses'=>'UserController@getLogin'
     ]);
   Route::post('login', 'UserController@postLogin');
 
-  Route::get('forgotpassword', [
-    'as'=>'forgotpassword',
-    'uses'=>'UserController@getForgotpassword'
-  ]);
-  Route::post('forgotpassword', 'UserController@postForgotpassword');
-
+  /*
+  * Registration Routes
+  */
   Route::get('signup',[
     'as'=>'signup',
     'uses'=>'UserController@getRegister'
     ]);
   Route::post('signup', 'UserController@postRegister');
 
-  Route::get('password/reset/{token}', 'RemindersController@getReset');
-  Route::post('password/reset/{token}','RemindersController@postReset');
+  /* Registration confirmation route (If needed) */
   Route::get('register/verify/{confirmationCode}', [
     'as' => 'confirmation_path',
     'uses' => 'UserController@confirm'
   ]);
+
+  /*
+  * Reset password routes
+  */
+  Route::get('password/reset/{token}', 'PasswordController@getReset');
+  Route::post('password/reset/{token}','PasswordController@postReset');
+  Route::controller('password','PasswordController');
+
 });
 
 Route::group(array('before' => 'auth'), function()
