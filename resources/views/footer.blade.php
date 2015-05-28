@@ -22,5 +22,16 @@
   <li><span class='link'>Privacy</span></li>
   <li><span class='link'>Terms</span></li>
  </ul>
+ <!--
+ Contests: Help parents know about and enter contests. Gap kids for example.
+ IOS App
+ Android App
+ LinkedIn
+ Facebook
+ Twitter
+-->
+ <ul>
+ </ul>
+ <p>Made with <span class='ion-heart'></span></p>
 </div>
 </footer>
