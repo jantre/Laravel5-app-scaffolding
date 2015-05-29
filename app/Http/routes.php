@@ -37,23 +37,23 @@ Route::group(array('before' => 'guest'), function()
   */
   Route::get('login', [
     'as'=>'login',
-    'uses'=>'UserController@getLogin'
+    'uses'=>'AuthenticationController@getLogin'
     ]);
-  Route::post('login', 'UserController@postLogin');
+  Route::post('login', 'AuthenticationController@postLogin');
 
   /*
   * Registration Routes
   */
   Route::get('signup',[
     'as'=>'signup',
-    'uses'=>'UserController@getRegister'
+    'uses'=>'AuthenticationController@getRegister'
     ]);
-  Route::post('signup', 'UserController@postRegister');
+  Route::post('signup','AuthenticationController@postRegister');
 
   /* Registration confirmation route (If needed) */
   Route::get('register/verify/{confirmationCode}', [
     'as' => 'confirmation_path',
-    'uses' => 'UserController@confirm'
+    'uses' => 'AuthenticationController@confirm'
   ]);
 
   /*
@@ -94,7 +94,7 @@ Route::group(array('before' => 'auth'), function()
 //Route::get('user/profile/{username}','UserController@viewProfile');
 
 
-Route::get('logout','UserController@getlogout');
+Route::get('logout','AuthenticationController@getlogout');
 
 
 
