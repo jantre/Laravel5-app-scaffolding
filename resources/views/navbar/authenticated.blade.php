@@ -2,7 +2,6 @@
   <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand hidden-xs" href="/"><span class='link'>Laravel Application</span></a>
-      <div>
         <button type="button" class="navbar-toggle navbar-toggle-left collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
