@@ -15,7 +15,7 @@
               @include('app.app_menu')
               <li class='border-bottom'></li>
             </ul>
-            @include('app.navbar_menu')
+            @include('navbar.navbar_menu')
           </ul>
           <div class="dropdown dropdown-menu-right hidden-xs">
             <div class="dropdown-toggle link hidden-xs" type="button" data-toggle="dropdown" aria-expanded="true">
@@ -23,7 +23,7 @@
               <span class="caret"></span>
             </div>
             <ul class="dropdown-menu" role="menu">
-              @include('app.navbar_menu')
+              @include('navbar.navbar_menu')
             </ul>
           </div>
        </div><!--collapse-->
