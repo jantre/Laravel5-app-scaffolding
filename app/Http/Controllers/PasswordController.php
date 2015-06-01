@@ -1,10 +1,10 @@
 <?php namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-
+use Illuminate\Http\Request;
 use Validator;
 use Input;
 use Redirect;
@@ -16,8 +16,9 @@ use Hash;
 
 class PasswordController extends Controller {
 
-  use ResetsPasswords;
+use ResetsPasswords;
 
+  protected $redirectTo = '/';
   /**
    * Create a new password controller instance.
    *
@@ -27,8 +28,10 @@ class PasswordController extends Controller {
    */
   public function __construct(Guard $auth, PasswordBroker $passwords)
   {
-      $this->auth = $auth;
-      $this->passwords = $passwords;
+    $this->auth = $auth;
+    $this->passwords = $passwords;
+
+    $this->middleware('guest');
   }
 
 
@@ -94,7 +97,7 @@ class PasswordController extends Controller {
     );
     $validator = Validator::make(
             array('email' => Input::get('email'), 'password' => Input::get('password'), 'password_confirm' => Input::get('password_confirm')),
-            array('email' => 'required|unique:users,email|email', 'password' => 'required|min:6|max:20|same:password_confirm')
+            array('email' => 'required|unique:users,email|email', 'password' => 'required|min:4|max:20|same:password_confirm')
         );
     $response = Password::reset($credentials, function($user, $password)
     {

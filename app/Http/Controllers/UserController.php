@@ -14,6 +14,10 @@ use App\Http\Requests\UserFormRequest;
 class UserController extends Controller
 {
 
+  /**
+   * Update the user's profile information.
+   * @return [type]
+   */
   public function postProfile()
   {
     if(!Auth::user())
@@ -40,6 +44,10 @@ class UserController extends Controller
     return Redirect::to('/app/main');
   }
 
+  /**
+   * Update the user's password to the new password.
+   * @return [type]
+   */
   public function postChangePassword()
   {
     $rules = ['currentpass' => 'required|min:6',

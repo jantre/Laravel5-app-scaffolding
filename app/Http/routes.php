@@ -29,9 +29,7 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
   return View::make('landing')->with('success',$success);
 }));
 
-/** Pages that can be visited as guest only **/
-Route::group(array('before' => 'guest'), function()
-{
+
   /*
   * Login routes
   */
@@ -63,10 +61,8 @@ Route::group(array('before' => 'guest'), function()
   Route::post('password/reset/{token}','PasswordController@postReset');
   Route::controller('password','PasswordController');
 
-});
 
-Route::group(array('before' => 'auth'), function()
-{
+
   Route::get('/user/profile',function()
   {
     return View::make('user.settings.profile');
@@ -88,13 +84,11 @@ Route::group(array('before' => 'auth'), function()
   Route::post('/user/profile','UserController@postProfile');
 
 
-});
-
 
 //Route::get('user/profile/{username}','UserController@viewProfile');
 
 
-Route::get('logout','AuthenticationController@getlogout');
+Route::get('logout','AuthenticationController@getLogout');
 
 
 

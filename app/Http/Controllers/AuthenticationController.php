@@ -11,16 +11,45 @@ use Session;
 use App\Models\User;
 use App\Http\Requests\UserFormRequest;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\Registrar;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
+
 class AuthenticationController extends Controller
 {
 
-/**
- * Simply return the login view
- * @return view
- */
+  //use AuthenticatesAndRegistersUsers;
+
+  /**
+   * Create a new authentication controller instance.
+   *
+   * @param  \Illuminate\Contracts\Auth\Guard  $auth
+   * @param  \Illuminate\Contracts\Auth\Registrar  $registrar
+   * @return void
+   */
+  public function __construct(Guard $auth, Registrar $registrar)
+  {
+    $this->auth = $auth;
+    $this->registrar = $registrar;
+
+    // Only guest's can access this controller, except for the getLogout method.
+    $this->middleware('guest', ['except' => 'getLogout']);
+  }
+
+  /**
+   * Simply return the login view
+   * @return view
+   */
   public function getLogin()
   {
-    return view('user.login');
+    return view('auth.login');
+  }
+
+  public function getRegister()
+  {
+    return view('auth.register');
   }
 
  /**
@@ -30,8 +59,7 @@ class AuthenticationController extends Controller
   */
   public function getLogout()
   {
-    Auth::logout(); //logout the current user
-    Session::flush(); //delete the session
+     $this->auth->logout();
     return Redirect::to('/'); //redirect to login page
   }
 
@@ -123,8 +151,6 @@ class AuthenticationController extends Controller
             ]);
       }
     }
-
-    Session::flash('message','Welcome back!');
 
     return Redirect::home();
   }
