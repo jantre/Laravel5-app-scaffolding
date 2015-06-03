@@ -10,9 +10,37 @@ use Auth;
 use Session;
 use App\Models\User;
 use App\Http\Requests\UserFormRequest;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\Registrar;
+
 
 class UserController extends Controller
 {
+
+
+  /**
+   * Create a new authentication controller instance.
+   *
+   * @param  \Illuminate\Contracts\Auth\Guard $auth
+   * @param  \Illuminate\Contracts\Auth\Registrar $registrar
+   * @return void
+   */
+  public function __construct(Guard $auth, Registrar $registrar)
+  {
+    $this->auth = $auth;
+    $this->registrar = $registrar;
+
+    // Only Authenticated users can access this controller.
+    $this->middleware('auth');
+  }
+
+  public function getChangePassword(){
+      return view('user.settings.changepassword');
+  }
+
+  public function getProfile(){
+    return view('user.settings.profile');
+  }
 
   /**
    * Update the user's profile information.
@@ -22,7 +50,7 @@ class UserController extends Controller
   {
     if(!Auth::user())
     {
-      return Redirect::back()->withInput()->withErrors('error','D\'oh! Something went wrong. If the problem persists please log out and log back in then try again.');
+      return Redirect::back()->withInput()->withErrors('error','OhoSomething went wrong. If the problem persists please log out and log back in then try again.');
     }
     if(Auth::user()->email != Input::get('email'))
     {

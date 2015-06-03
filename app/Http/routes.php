@@ -62,17 +62,9 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
   Route::controller('password','PasswordController');
 
 
+  Route::controller('user','UserController');
 
-  Route::get('/user/profile',function()
-  {
-    return View::make('user.settings.profile');
-  });
-
-  Route::get('/user/change-password',function()
-  {
-    return View::make('user.settings.changepassword');
-  });
-  Route::post('/user/change-password','UserController@postChangePassword');
+//TODO:  Is this still being used?
   /* Ajax forms to handle form submisison*/
   Route::get('/user/settings/ajax/forms/{page}',function($page)
   {
@@ -80,9 +72,6 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
   });
 
   Route::controller('app', 'AppController');
-
-  Route::post('/user/profile','UserController@postProfile');
-
 
 
 //Route::get('user/profile/{username}','UserController@viewProfile');
