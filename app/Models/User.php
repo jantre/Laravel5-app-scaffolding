@@ -31,17 +31,53 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
-	/*
-	Allow 'Mass assignment' of all fields except id and password.
-	See http://laravel.com/docs/4.2/eloquent#mass-assignment
-	*/
+
+	// Allow 'Mass assignment' of all fields except id.
   protected $guarded = array('id');
 
-  // This will allow us to attach a role to a user.
-  // Example: To give the first user the role that contains ID 3
-  //          User::first()->role()->attach(3)
+  /**
+   * This will allow us to attach a role to a user
+   * Example: To give the first user the role that contains ID 3
+   *          User::first()->role()->attach(3)
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+   */
   public function roles(){
    return $this->belongsToMany('App\Models\Role')->withTimestamps();
   }
 
+  /**
+   * Does the user have a particular role?
+   *
+   * @param $name
+   * @return bool
+   */
+  public function hasRole($name)
+  {
+    foreach ($this->roles as $role)
+    {
+      if ($role->name == $name) return true;
+    }
+    return false;
+  }
+  /**
+   * Assign a role to the user
+   *
+   * @param $role
+   * @return mixed
+   */
+  public function assignRole($role)
+  {
+    return $this->roles()->attach($role);
+  }
+  /**
+   * Remove a role from a user
+   *
+   * @param $role
+   * @return mixed
+   */
+  public function removeRole($role)
+  {
+    return $this->roles()->detach($role);
+  }
 }
