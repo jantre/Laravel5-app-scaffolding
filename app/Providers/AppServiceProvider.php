@@ -25,6 +25,14 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+    /*
+     * Only use the Laracast generators on local development environment as suggested
+     * on https://github.com/laracasts/Laravel-5-Generators-Extended
+     */
+    if ($this->app->environment() == 'local') {
+      $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
+    }
+
 		$this->app->bind(
 			'Illuminate\Contracts\Auth\Registrar',
 			'App\Services\Registrar'
