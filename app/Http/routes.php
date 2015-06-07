@@ -12,6 +12,15 @@
 */
 
 
+
+Route::get('test',function(){
+  // give the first user role id 3
+  //\App\Models\User::first()->roles()->attach(3);
+
+  // return the first user and her roles.
+  // return \App\Models\User::with('roles')->first();
+});
+
 Route::get('/', array('as'=>'home', 'uses'=> function()
 {
   // If the user is already logged in, redirect them into the app.
@@ -31,13 +40,14 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
 
 
   /*
-  * Login routes
+  * Authentication routes
   */
   Route::get('login', [
     'as'=>'login',
     'uses'=>'AuthenticationController@getLogin'
     ]);
   Route::post('login', 'AuthenticationController@postLogin');
+  Route::get('logout','AuthenticationController@getLogout');
 
   /*
   * Registration Routes
@@ -73,22 +83,7 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
 
   Route::controller('app', 'AppController');
 
+  Route::controller('admin','AdminController');
+
 
 //Route::get('user/profile/{username}','UserController@viewProfile');
-
-
-Route::get('logout','AuthenticationController@getLogout');
-
-
-
-/* alias to sign up page */
-Route::get('register', function()
-{
-  return Redirect::to('/signup');
-});
-
-// Redirect auth/login to just /login so we don't have to change app/Http/Middleware/Authenticate.php
-Route::get('auth/login',function()
-{
-  return Redirect::to('/login');
-});

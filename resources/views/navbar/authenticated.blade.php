@@ -17,8 +17,14 @@
             </ul>
             @include('navbar.navbar_menu')
           </ul>
+
           <div class="dropdown dropdown-menu-right hidden-xs">
-            <div class="dropdown-toggle link hidden-xs" type="button" data-toggle="dropdown" aria-expanded="true">
+              @if(Auth::user()->hasRole('owner'))
+                  <div class="fl mr20">
+                      <a href="/admin"><button class="btn btn-sm btn-danger">Admin</button></a>
+                  </div>
+              @endif
+            <div class="navbar-link-right dropdown-toggle link hidden-xs" type="button" data-toggle="dropdown" aria-expanded="true">
               {{ Auth::user()->username }}
               <span class="caret"></span>
             </div>
