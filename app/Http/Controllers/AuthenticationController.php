@@ -97,7 +97,7 @@ class AuthenticationController extends Controller
     {
       $confirmation_code = str_random(30);
       $user['confirmation_code'] = $confirmation_code;
-      // TODO:  the user create function here and below are repetative. Perhaps use an event trigger to clean this up.
+      // TODO:  the user create function here and below are repetitive. Perhaps use an event trigger to clean this up.
       User::create($user);
       //TODO:  Check to see if the user was actually created before sending out an email.
       Mail::send('emails.auth.regverification', array('confirmation_code'=>$confirmation_code), function($message) {
@@ -109,7 +109,8 @@ class AuthenticationController extends Controller
     {
       // NO EMAIL VERIFICATION ( NOT RECOMMENDED FOR PRODUCTION)
       $user['status'] = 1;
-      User::create($user);
+      User::create($user)->assignRole('member');
+
       // Authenticate the user automatically since verification is not required.
       Auth::attempt(array('email'=>Input::get('email'),'password'=>Input::get('password')));
     }

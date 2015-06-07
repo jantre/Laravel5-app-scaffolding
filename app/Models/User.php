@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Role;
+use App\Models\Role;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword;
@@ -63,12 +63,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
   /**
    * Assign a role to the user
    *
-   * @param $role
+   * @param $role  The name of the role
    * @return mixed
    */
   public function assignRole($role)
   {
-    return $this->roles()->attach($role);
+    $role_id = Role::where('name','=',$role)->first()->id;
+    return $this->roles()->attach($role_id);
   }
   /**
    * Remove a role from a user
