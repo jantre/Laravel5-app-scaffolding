@@ -12,7 +12,14 @@ class AdminController extends Controller {
 
 
   public function getIndex(){
-    $users = User::with('roles')->get()->toArray();
+    $usersObj = User::with('roles')->paginate(10);
+    /*
+     * The only reason we are really converting users to an array here
+     * rather tha just passing it to the view, is because we have some logic
+     * around the roles.
+     * set roles as comma separated string.
+     */
+    $users = $usersObj->getCollection()->toArray();
     $count = 0;
     foreach($users as $user){
       if(!empty($user['roles'])){
@@ -27,6 +34,6 @@ class AdminController extends Controller {
       }
       $count++;
     }
-    return view('admin.users')->withUsers($users);
+    return view('admin.users')->withUsers($users)->withTotal($usersObj->total())->withPagination($usersObj->render());
   }
 }

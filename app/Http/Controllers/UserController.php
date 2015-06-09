@@ -50,7 +50,7 @@ class UserController extends Controller
   {
     if(!Auth::user())
     {
-      return Redirect::back()->withInput()->withErrors('error','OhoSomething went wrong. If the problem persists please log out and log back in then try again.');
+      return Redirect::back()->withInput()->withErrors('error','Something went wrong. If the problem persists please log out and log back in then try again.');
     }
     if(Auth::user()->email != Input::get('email'))
     {

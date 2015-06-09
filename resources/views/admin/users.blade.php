@@ -4,7 +4,7 @@
 @if (empty($users))
     There are no users
 @else
-    Total users: {{ count($users) }}
+    Total users: {{ $total }}
     <div class="col-lg-12">
         <table class="table table-striped">
             <thead>
@@ -33,5 +33,6 @@
             </tbody>
         </table>
     </div>
+    {!! $pagination !!}
 @endif
 @stop
