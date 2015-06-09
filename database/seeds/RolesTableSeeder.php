@@ -12,8 +12,11 @@ class RolesTableSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		\App\Models\Role::create(['name'=>'member','name'=>'administrator','name'=>'owner']);
-
+		$roles = ['member','administrator','owner'];
+		foreach($roles as $role)
+		{
+			\App\Models\Role::create( ['name'=> $role] );
+		}
 	}
 
 }
