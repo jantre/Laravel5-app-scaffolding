@@ -50,29 +50,31 @@ use ResetsPasswords;
    */
   public function postForgot(Request $request)
   {
-      $validator = Validator::make(
-          ['email' => $request->get('email')],
-          ['email' => 'required|email|min:6|max:60']
-      );
+    $validator = Validator::make(
+        ['email' => $request->get('email')],
+        ['email' => 'required|email']
+    );
 
-      if($validator->passes()) {
-          $response = $this->passwords->sendResetLink($request->only('email'), function ($m) {
-              $m->subject($this->getEmailSubject());
-          });
+    if($validator->fails())
+    {
+      return Redirect::back()->withInput()->withErrors($validator);
+    }
 
-          switch ($response) {
-              case PasswordBroker::RESET_LINK_SENT:
-                return Redirect::to('login')->withSuccess('Please check your email for password reset instructions.');
+    $response = $this->passwords->sendResetLink($request->only('email'), function ($m) {
+      // Set the subject of the password reset email.
+      $m->subject($this->getEmailSubject());
+    });
 
-              case PasswordBroker::INVALID_USER:
-                return redirect()->back()->withErrors(['username' => trans($response)]);
-          }
-      } else {
-          return \Response::json(['error' => [
-              'messages' => $validator->getMessageBag(),
-              'rules' => $validator->getRules()
-          ]]);
-      }
+    switch ($response) {
+      case PasswordBroker::RESET_LINK_SENT:
+        return Redirect::to('login')->withSuccess('Please check your email for password reset instructions.');
+
+      case PasswordBroker::INVALID_USER:
+        return redirect()->back()->withErrors(['username' => trans($response)]);
+
+      default:
+        return redirect()->back()->withErrors(['username' => trans($response)]);
+    }
   }
 
   public function getReset($token = null)

@@ -64,7 +64,7 @@ class AuthenticationController extends Controller
   {
     $rules = [
       'email' => 'required',
-      'password' => 'required|min:6'
+      'password' => 'required'
     ];
 
     $input = Input::only('email', 'password');
@@ -73,7 +73,7 @@ class AuthenticationController extends Controller
 
     if($validator->fails())
     {
-        return Redirect::back()->withInput()->withErrors($validator);
+      return Redirect::back()->withInput()->withErrors($validator);
     }
 
     $creds = [
