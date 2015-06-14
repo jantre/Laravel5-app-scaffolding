@@ -32,7 +32,7 @@
     @endforeach
             </tbody>
         </table>
+        <div class="text-center">{!! $pagination !!}</div>
     </div>
-    {!! $pagination !!}
 @endif
 @stop
