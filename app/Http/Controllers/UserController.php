@@ -68,8 +68,7 @@ class UserController extends Controller
     Auth::user()->firstname = Input::get('firstname');
     Auth::user()->lastname = Input::get('lastname');
     Auth::user()->save();
-    Session::flash('success','Profile Updated');
-    return Redirect::to('/app/main');
+    return Redirect::to('/app/main')->withSuccess("Profile Updated");
   }
 
   /**
@@ -102,6 +101,6 @@ class UserController extends Controller
     }
     Auth::user()->password=Hash::make(Input::get('newpass'));
     Auth::user()->save();
-    return Redirect::back()->withSuccess('Password has been changed!');
+    return Redirect::to('/app/main')->withSuccess('Password has been changed!');
   }
 }//end class
