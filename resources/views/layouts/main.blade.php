@@ -25,6 +25,8 @@
       @include('notifications')
       @yield('content')
     </div>
-    @include('footer')
+    <div class="container">
+        @include('footer')
+    </div>
   </body>
 </html>
