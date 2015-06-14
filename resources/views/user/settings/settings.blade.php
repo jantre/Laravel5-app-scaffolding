@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.main')
 @section('content')
 @include('user.settings.settings_menu')
 <div id='settings-ajax-content'>

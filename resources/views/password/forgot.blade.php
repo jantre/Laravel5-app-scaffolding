@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.main')
 @section('content')
 <div class='row'>
   <div class='col-xs-10 col-sm-6 col-md-5 col-lg-4 center-block'>
