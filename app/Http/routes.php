@@ -54,14 +54,14 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
   */
   Route::get('signup',[
     'as'=>'signup',
-    'uses'=>'AuthenticationController@getRegister'
+    'uses'=>'RegistrationController@getRegister'
     ]);
-  Route::post('signup','AuthenticationController@postRegister');
+  Route::post('signup','RegistrationController@postRegister');
 
   /* Registration confirmation route (If needed) */
   Route::get('register/verify/{confirmationCode}', [
     'as' => 'confirmation_path',
-    'uses' => 'AuthenticationController@confirm'
+    'uses' => 'RegistrationController@confirm'
   ]);
 
   /*
