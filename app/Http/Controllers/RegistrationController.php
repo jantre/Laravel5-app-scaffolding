@@ -120,6 +120,7 @@ class RegistrationController extends Controller
     $user->status = 1;
     $user->confirmation_code = null;
     $user->save();
+    $user->assignRole('member');
     Auth::login($user);
     if (Auth::check()){
       //Session::flash('success','You have successfully verified your account.');
