@@ -1,18 +1,17 @@
 @extends('layouts.main')
 
 @section('content')
-<div class='form-block'>
-  {!! Form::open(array('id'=>'fp-form')) !!}
-  <ul>
-    <li class='form-title'>Reset Password</li>
-    <li>
-      <input type="hidden" name="token" value="{!! $token !!}">
-      {!! Form::text('email', Input::old('email'), array('placeholder' => 'Email')) !!}
-    </li>
-  	<li>{!! Form::password('password', array('placeholder' => 'Password')) !!}</li>
-  	<li>{!! Form::password('password_confirmation', array('placeholder' => 'Confirm Password')) !!}</li>
-    <li><input type="submit" class='submit-button' value="Reset Password"></li>
-  </ul>
-  {!! Form::close() !!}
-</div>
+    <div class='row'>
+        <div class='col-xs-10 col-sm-6 col-md-5 col-lg-4 center-block'>
+            <div class='panel panel-info'>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reset Password</h3>
+                </div>
+                <div class="panel-body">
+                    @include('forms.passwordReset_form')
+                </div>
+                <div class='panel-footer'>Remember your password? {!!HTML::link('login','Login')!!}</div>
+            </div>
+        </div>
+    </div>
 @stop
