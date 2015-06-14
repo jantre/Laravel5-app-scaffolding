@@ -6,14 +6,7 @@
     @include('app.app_menu')
   </div>
 
-  <div class='col-xs-12 col-sm-9'>
-		{!! Form::label('til', 'Submit something..') !!}
-		{!! Form::textarea('til') !!}
-  	<div>
-  		{!! Form::button('Submit', ['class' => 'submit-button tillog-button']) !!}
-  	</div>
-    <hr>
-  </div>
+<h1>Welcome</h1>
 </div>
 
 @stop
