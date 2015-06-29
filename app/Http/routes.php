@@ -12,6 +12,8 @@
 */
 
 
+Route::get('sociallogin/{provider}', 'AuthenticationController@redirectToProvider');
+Route::get('callback/{provider}','AuthenticationController@handleProviderCallback');
 
 Route::get('test',function(){
   // give the first user role id 3

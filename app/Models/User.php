@@ -81,4 +81,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
   {
     return $this->roles()->detach($role);
   }
+
+  /**
+   * This will allow us to attach a social provider login to a user
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+   */
+  public function providers(){
+    return $this->belongsToMany('App\Models\Providers');
+  }
+
+//  public function allowPost($provider, $status = true){
+//    return $this->provider
+//  }
+
+
 }
