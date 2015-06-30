@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Auth;
 use Log;
-
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -57,7 +57,6 @@ class SocialAccountsController extends Controller
           'user_id' => $user->id,
           'oauth_token' => $social->token,
         ]);
-        dd(DB::getQueryLog());
       }else{
         Log::debug("Social Account exists.");
       }
