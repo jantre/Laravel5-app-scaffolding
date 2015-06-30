@@ -1,11 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class social extends Model
+class SocialAccount extends Model
 {
-  // allow all the fields in the social table to be mass assignable
+  protected $table = 'social_accounts';
+  public $timestamps = false;
+  // allow all the fields in the social_accounts table to be mass assignable
   protected $fillable = array('*');
 }

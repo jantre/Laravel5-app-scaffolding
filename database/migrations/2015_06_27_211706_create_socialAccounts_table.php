@@ -12,7 +12,7 @@ class CreateSocialAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('socialAccounts', function (Blueprint $table) {
+        Schema::create('social_accounts', function (Blueprint $table) {
           $table->string('provider_uid')->index();
           $table->enum('provider',['facebook','twitter','google','linkedin','github','bitbucket'])->index();
           $table->integer('user_id')->unsigned()->index();
@@ -30,6 +30,6 @@ class CreateSocialAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('socialAccounts');
+        Schema::drop('social_accounts');
     }
 }

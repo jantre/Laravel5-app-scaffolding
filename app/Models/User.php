@@ -87,7 +87,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    */
   public function providers(){
-    return $this->belongsToMany('App\Models\Providers');
+    return $this->belongsToMany('App\Models\SocialAccounts');
   }
 
 //  public function allowPost($provider, $status = true){

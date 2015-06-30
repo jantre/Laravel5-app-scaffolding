@@ -37,11 +37,11 @@ class UserController extends Controller
   /**
    * Add the user to the users table.
    * Return the user object or false.
-   * @param $user
+   * @param array $user
    * @param null $role
-   * @return bool
+   * @return bool or User object
    */
-  public function addUser($user, $role = null)
+  public function addUser(Array $user, $role = null)
   {
     User::create($user);
     $u = User::where('email','=',$user['email'])->first();
@@ -56,7 +56,6 @@ class UserController extends Controller
     }
     return $u;
   }
-
 
   public function getChangePassword(){
       return view('user.settings.changepassword');

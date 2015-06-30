@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Auth;
+use Log;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Provider;
+use App\Models\User;
+use App\Models\SocialAccount;
 use Laravel\Socialite\Facades\Socialite;
 
 
-
-class ProviderController extends Controller
+class SocialAccountsController extends Controller
 {
   /*
 * Socialite functions
@@ -33,21 +36,47 @@ class ProviderController extends Controller
   public function handleProviderCallback($provider)
   {
 
-    $user = Socialite::with($provider)->user();
+    $social = Socialite::with($provider)->user();
     //$user->debug = "YOu have logged in with $provider";
     //Check if ID and provider exist in the social table.
-  dd($user->getId());
+      $SA = SocialAccount::where('provider_uid','=',$social->getId())->first();
+      if(!$SA)
+      {
+        Log::debug("Social Account DOES NOT exist.");
+        $user = User::where('email','=',$social->getEmail())->first();
+        if(!$user) {
+          $user = User::create(['email' => $social->getEmail(),
+              'firstname' => $social->getName(),
+              'username' => $social->getEmail(), // TODO: Nickname can be null from the social provider
+              'status' => 1
+            ]);
+        }
+        //TODO: This is not producing the right insert query.
+        $SA = SocialAccount::create(['provider_uid' => $social->getId(),
+          'provider' => $provider,
+          'user_id' => $user->id,
+          'oauth_token' => $social->token,
+        ]);
+        dd(DB::getQueryLog());
+      }else{
+        Log::debug("Social Account exists.");
+      }
+      //dd($userObj);
+
+    Auth::loginUsingId($SA->user_id);
+
+    return Redirect::home();
 
     //If so then we can log this user into the application
 
     // If not then this is a registration.  Pass the user object to the registrationController
-    dd($user);
+    //dd($user);
     // $user->token;
 // All Providers
 
-    $user->getNickname();
-    $user->getName();
-    $user->getEmail();
-    $user->getAvatar();
+//    $user->getNickname();
+//    $user->getName();
+//    $user->getEmail();
+//    $user->getAvatar();
   }
 }

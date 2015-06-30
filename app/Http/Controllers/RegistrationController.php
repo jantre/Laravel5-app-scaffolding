@@ -89,6 +89,7 @@ class RegistrationController extends Controller
       // NO EMAIL VERIFICATION REQUIRED
       $userObj->status = 1;
       $userObj->save();
+      dd($userObj);
       // Authenticate the user automatically since verification is not required.
       Auth::loginUsingId($userObj->id);
     }
