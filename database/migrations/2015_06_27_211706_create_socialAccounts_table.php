@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProvidersTable extends Migration
+class CreateSocialAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateProvidersTable extends Migration
      */
     public function up()
     {
-        Schema::create('providers', function (Blueprint $table) {
+        Schema::create('socialAccounts', function (Blueprint $table) {
           $table->string('provider_uid')->index();
           $table->enum('provider',['facebook','twitter','google','linkedin','github','bitbucket'])->index();
           $table->integer('user_id')->unsigned()->index();
@@ -30,6 +30,6 @@ class CreateProvidersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('providers');
+        Schema::drop('socialAccounts');
     }
 }

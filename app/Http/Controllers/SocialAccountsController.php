@@ -17,7 +17,7 @@ class ProviderController extends Controller
 * Socialite functions
 */
 
-  public function redirectToProvider($provider)
+  public function getIndex($provider)
   {
     switch ($provider)
     {
@@ -32,15 +32,22 @@ class ProviderController extends Controller
 
   public function handleProviderCallback($provider)
   {
+
     $user = Socialite::with($provider)->user();
-
+    //$user->debug = "YOu have logged in with $provider";
     //Check if ID and provider exist in the social table.
-
+  dd($user->getId());
 
     //If so then we can log this user into the application
 
     // If not then this is a registration.  Pass the user object to the registrationController
     dd($user);
     // $user->token;
+// All Providers
+
+    $user->getNickname();
+    $user->getName();
+    $user->getEmail();
+    $user->getAvatar();
   }
 }
