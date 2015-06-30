@@ -34,6 +34,30 @@ class UserController extends Controller
     $this->middleware('auth');
   }
 
+  /**
+   * Add the user to the users table.
+   * Return the user object or false.
+   * @param $user
+   * @param null $role
+   * @return bool
+   */
+  public function addUser($user, $role = null)
+  {
+    User::create($user);
+    $u = User::where('email','=',$user['email'])->first();
+
+    if(!$u){
+      return false;
+    }
+
+    if(!empty($role))
+    {
+      $u->assignRole($role);
+    }
+    return $u;
+  }
+
+
   public function getChangePassword(){
       return view('user.settings.changepassword');
   }

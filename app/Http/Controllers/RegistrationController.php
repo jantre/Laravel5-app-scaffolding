@@ -8,6 +8,7 @@ use Mail;
 use Auth;
 use Session;
 use App\Models\User;
+use App\Http\Controllers\UserController;
 use App\Http\Requests\UserFormRequest;
 
 use App\Http\Controllers\Controller;
@@ -43,8 +44,7 @@ class RegistrationController extends Controller
   }
 
   /*
-  * Function to handle verification of Registration form
-  * and creating a new user in the database.
+  * Function to handle verification of Registration form.
   */
   public function postRegister()
   {
@@ -70,14 +70,15 @@ class RegistrationController extends Controller
       'email' => Input::get('email'),
       'password' => Hash::make(Input::get('password'))
     ];
+    $UC = new UserController($this->auth,$this->registrar);
+    $userObj = $UC->addUser($user);
 
-    if(!env('REGISTRATION_SKIP_VERIFICATION',0))
+    if(env('REQUIRE_REGISTRATION_VERIFICATION',0))
     {
+      // TODO: split confirmation_code into its own table.
       $confirmation_code = str_random(30);
-      $user['confirmation_code'] = $confirmation_code;
-      // TODO:  the user create function here and below are repetitive. Perhaps use an event trigger to clean this up.
-      User::create($user);
-      //TODO:  Check to see if the user was actually created before sending out an email.
+      $userObj->confirmation_code = $confirmation_code;
+      $userObj->save();
       Mail::send('emails.auth.regverification', array('confirmation_code'=>$confirmation_code), function($message) {
         $message->to(Input::get('email'), Input::get('username'))->subject('Verify your email address');
         Session::flash('success','Thanks for signing up! Please check your email to complete the registration process.');
@@ -85,12 +86,11 @@ class RegistrationController extends Controller
     }
     else
     {
-      // NO EMAIL VERIFICATION ( NOT RECOMMENDED FOR PRODUCTION)
-      $user['status'] = 1;
-      User::create($user)->assignRole('member');
-
+      // NO EMAIL VERIFICATION REQUIRED
+      $userObj->status = 1;
+      $userObj->save();
       // Authenticate the user automatically since verification is not required.
-      Auth::attempt(array('email'=>Input::get('email'),'password'=>Input::get('password')));
+      Auth::loginUsingId($userObj->id);
     }
     return Redirect::home();
   }
