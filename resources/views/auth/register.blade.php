@@ -8,12 +8,8 @@
       </div>
       <div class="panel-body">
         @include('forms.register_form')
-      </div>
-        <hr>
-        <a href="/sociallogin/facebook">
-            Facebook Login
-        </a>
-        <hr>
+      </div class="social-wrapper">
+        @include('social_buttons')
       <div class='panel-footer'>Already Have an Account? {!!HTML::link('login','Login')!!}</div>
     </div>
   </div>

@@ -9,6 +9,10 @@
       <div class="panel-body">
         @include('forms.login_form')
       </div>
+      <div class="social-wrapper">
+        <h5>Or connect with</h5>
+        @include('social_buttons')
+      </div>
       <div class="panel-footer">Don't have an account?  {!! HTML::link('signup','Signup') !!}</div>
     </div>
   </div>
