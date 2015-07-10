@@ -8,8 +8,10 @@
       </div>
       <div class="panel-body">
         @include('forms.register_form')
-      </div class="social-wrapper">
+      </div>
+      <div class="social-wrapper">
         @include('social_buttons')
+      </div>
       <div class='panel-footer'>Already Have an Account? {!!HTML::link('login','Login')!!}</div>
     </div>
   </div>
