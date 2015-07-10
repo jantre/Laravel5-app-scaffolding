@@ -93,4 +93,11 @@ class AuthenticationController extends Controller
     }
     return Redirect::home();
   }
+
+  //TODO: Improve on this function.
+  public function loginUsingId($id){
+    Auth::loginUsingId($id);
+
+    return Redirect::home();
+  }
 }//end class

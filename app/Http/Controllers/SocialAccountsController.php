@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Redirect;
 //use Illuminate\Http\Request;
 use Auth;
 use Log;
 use DB;
 use Request;
-//use App\Http\Requests;
-//use App\Http\Controllers\Controller;
+use View;
+Use Session;
+use Input;
 use App\Models\User;
 use App\Models\SocialAccount;
 use Laravel\Socialite\Facades\Socialite;
@@ -46,31 +48,32 @@ class SocialAccountsController extends Controller
     if(!Request::has('code')){
      return Redirect::to('/signup');
     }
+
+    try
+    {
     $social = Socialite::with($provider)->user();
-    //dd($social);
-    //$user->debug = "YOu have logged in with $provider";
-    //Check if ID and provider exist in the social table.
-      $SA = SocialAccount::where('provider_uid','=',$social->getId())->first();
-      if(!$SA)
-      {
-        $user = User::where('email','=',$social->getEmail())->first();
-        if(!$user) {
-          $user = User::create(['email' => $social->getEmail(),
-              'firstname' => $social->getName(),
-              'username' => $social->getEmail(), // TODO: Nickname can be null from the social provider
-              'status' => 1
-            ]);
-        }
-        $SA = SocialAccount::create(['provider_uid' => $social->getId(),
-          'provider' => $provider,
-          'user_id' => $user->id,
-          'oauth_token' => $social->token,
-        ]);
+    } catch(ClientException $c) {
+      Log::error($c);
+      abort(400);
+    }
+
+    // Check if ID and provider exist in the social table.
+    $SA = SocialAccount::where('provider_uid','=',$social->getId())->first();
+    if(!$SA)
+    {
+      if(empty($social->getEmail())){
+        Session::put('social',$social);
+        Session::put('provider',$provider);
+        return View::make('auth.socialRegister')->withProvider(ucfirst($provider));;
+      }
+      $this->socialRegistration();
       }
 
+    // TODO: clean up this repetative authenticate and redirect also being done in the socialRegister function below
     Auth::loginUsingId($SA->user_id);
 
     return Redirect::home();
+
 
     //If so then we can log this user into the application
 
@@ -84,4 +87,46 @@ class SocialAccountsController extends Controller
 //    $user->getEmail();
 //    $user->getAvatar();
   }
+
+  /**
+   * This function can either be called from handleProviderCallback, where $email would be null
+   * Or it can be called from a socialRegister form submit on view auth.socialRegister
+   * @param Socialite $social
+   * @param $email
+   * @return Eloquent model
+   */
+  public function socialRegistration(){
+    $social = Session::get('social');
+    $provider = Session::get('provider');
+    $email = @Input::get('email') ? : $social->getEmail();
+
+    if(empty($email)){
+      Log::error('Email is empty');
+      abort(400,'Email is empty');
+    }
+
+    $user = User::where('email','=',$email)->first();
+    if(!$user) {
+      $user = User::create(['email' => $email,
+        'firstname' => $social->getName(),
+        'username' => $email, // Nickname can be null from the social provider so just use email
+        'status' => 1
+      ]);
+    }
+    $SA = SocialAccount::create(['provider_uid' => $social->getId(),
+      'provider' => $provider,
+      'user_id' => $user->id,
+      'oauth_token' => $social->token,
+    ]);
+    Session::forget('social');
+    Session::forget('provider');
+
+    // Authenticating and redirecting here because we can't simply return $SA
+    // for the reason that this function is called directly from socialRegister route.
+    // TODO: clean up this repetative authenticate and redirect also being done in the handler above
+    Auth::loginUsingId($SA->user_id);
+
+    return Redirect::home();
+  }
+
 }
