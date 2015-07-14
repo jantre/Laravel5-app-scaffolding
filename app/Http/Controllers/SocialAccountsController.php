@@ -19,17 +19,14 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialAccountsController extends Controller
 {
-  private $scopes = [];
-  /*
-* Socialite functions
-*/
-//TODO: Perhaps a better design is to use an interface with a class for each social provider.
+
   public function getIndex($provider)
   {
+    $scopes=[];
     switch ($provider)
     {
       case "facebook":
-        $this->scopes = ['email','publish_actions'];
+        $scopes = ['email','publish_actions'];
         break;
       case "google":
         break;
@@ -38,7 +35,7 @@ class SocialAccountsController extends Controller
     }
 
     if(!empty($scopes)){
-      return Socialite::with($provider)->scopes($this->scopes)->redirect();
+      return Socialite::with($provider)->scopes($scopes)->redirect();
     }
     return Socialite::with($provider)->redirect();
   }
@@ -51,52 +48,51 @@ class SocialAccountsController extends Controller
 
     try
     {
-    $social = Socialite::with($provider)->user();
+      $social = Socialite::with($provider)->user();
     } catch(ClientException $c) {
       Log::error($c);
-      abort(400);
+      abort(400,"Something went wrong. Please try again.");
     }
 
-    // Check if ID and provider exist in the social table.
+    // Check if ID and provider exist in the socialAccount model.
     $SA = SocialAccount::where('provider_uid','=',$social->getId())->first();
-    if(!$SA)
-    {
-      if(empty($social->getEmail())){
-        Session::put('social',$social);
-        Session::put('provider',$provider);
-        return View::make('auth.socialRegister')->withProvider(ucfirst($provider));;
-      }
-      $this->socialRegistration();
-      }
+    if($SA) {
+      // We know who this user is so log them in.
+      Auth::loginUsingId($SA->user_id);
+      return Redirect::home();
+    }
 
-    // TODO: clean up this repetative authenticate and redirect also being done in the socialRegister function below
-    Auth::loginUsingId($SA->user_id);
+    // We do not know who this is so let's register them.
 
-    return Redirect::home();
+    /*
+     * We are storing social values in a session here rather than a private class variable because the
+     * socialRegister form will post to SocialReigster (new instance of this class) to complete the signup process.
+     */
+    Session::put('social',$social);
+    Session::put('provider',$provider);
 
-
-    //If so then we can log this user into the application
-
-    // If not then this is a registration.  Pass the user object to the registrationController
-    //dd($user);
-    // $user->token;
-// All Providers
-
-//    $user->getNickname();
-//    $user->getName();
-//    $user->getEmail();
-//    $user->getAvatar();
+    if(empty($social->getEmail())){
+      return View::make('auth.socialRegister')->withProvider(ucfirst($provider));
+    }
+    return $this->socialRegistration();
   }
 
-  /**
-   * This function can either be called from handleProviderCallback, where $email would be null
-   * Or it can be called from a socialRegister form submit on view auth.socialRegister
-   * @param Socialite $social
-   * @param $email
-   * @return Eloquent model
-   */
+
+/**
+ * This function can either be called from handleProviderCallback, where $email would be null
+ * Or it can be called from a socialRegister form submit on view auth.socialRegister
+ * @param Socialite $social
+ * @param $email
+ * @return Eloquent model
+ */
   public function socialRegistration(){
+    if((Session::get('social') === null) && (Session::get('provider') === null)){
+      Log::error('Social session variable is not set');
+      abort(400,"Something went wrong. Please try again.");
+    }
+
     $social = Session::get('social');
+
     $provider = Session::get('provider');
     $email = @Input::get('email') ? : $social->getEmail();
 
@@ -123,10 +119,8 @@ class SocialAccountsController extends Controller
 
     // Authenticating and redirecting here because we can't simply return $SA
     // for the reason that this function is called directly from socialRegister route.
-    // TODO: clean up this repetative authenticate and redirect also being done in the handler above
     Auth::loginUsingId($SA->user_id);
 
     return Redirect::home();
   }
-
 }
