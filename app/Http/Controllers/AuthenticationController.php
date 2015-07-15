@@ -10,17 +10,14 @@ use Auth;
 use Session;
 use App\Models\User;
 use App\Http\Requests\UserFormRequest;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-
 class AuthenticationController extends Controller
 {
-
-  /**
+    /**
    * Create a new authentication controller instance.
    *
    * @param  \Illuminate\Contracts\Auth\Guard  $auth
@@ -29,8 +26,8 @@ class AuthenticationController extends Controller
    */
   public function __construct(Guard $auth, Registrar $registrar)
   {
-    $this->auth = $auth;
-    $this->registrar = $registrar;
+      $this->auth = $auth;
+      $this->registrar = $registrar;
 
     // Only guest's can access this controller, except for the getLogout method.
     $this->middleware('guest', ['except' => 'getLogout']);
@@ -42,7 +39,7 @@ class AuthenticationController extends Controller
    */
   public function getLogin()
   {
-    return view('auth.login');
+      return view('auth.login');
   }
 
  /**
@@ -52,8 +49,8 @@ class AuthenticationController extends Controller
   */
   public function getLogout()
   {
-     $this->auth->logout();
-    return Redirect::to('/'); //redirect to login page
+      $this->auth->logout();
+      return Redirect::to('/'); //redirect to login page
   }
 
   /*
@@ -62,42 +59,41 @@ class AuthenticationController extends Controller
   */
   public function postLogin()
   {
-    $rules = [
-      'email' => 'required',
-      'password' => 'required'
-    ];
+      $rules = [
+          'email' => 'required',
+          'password' => 'required'
+      ];
 
-    $input = Input::only('email', 'password');
+      $input = Input::only('email', 'password');
 
-    $validator = Validator::make($input, $rules);
+      $validator = Validator::make($input, $rules);
 
-    if($validator->fails())
-    {
-      return Redirect::back()->withInput()->withErrors($validator);
-    }
+      if ($validator->fails()) {
+          return Redirect::back()->withInput()->withErrors($validator);
+      }
 
-    $creds = [
-        'password' => Input::get('password'),
-        'status' => 1
-    ];
-    if ( ! Auth::attempt(array_merge(array('username'=>Input::get('email')),$creds),Input::get('rememberme') ) )
-    {
-      if ( ! Auth::attempt(array_merge(array('email'=>Input::get('email')),$creds),Input::get('rememberme') ) )
-      {
-        return Redirect::to('login')
+      $creds = [
+          'password' => Input::get('password'),
+          'status' => 1
+      ];
+      if (! Auth::attempt(array_merge(array('username'=>Input::get('email')), $creds), Input::get('rememberme'))) {
+          if (! Auth::attempt(array_merge(array('email'=>Input::get('email')), $creds), Input::get('rememberme'))) {
+              return Redirect::to('login')
             ->withInput()
             ->withErrors([
                 'credentials' => 'The email and password you entered does not match our records. Please try again.'
             ]);
+          }
       }
-    }
-    return Redirect::home();
+      return Redirect::home();
   }
 
   //TODO: Improve on this function.
-  public function loginUsingId($id){
-    Auth::loginUsingId($id);
+  public function loginUsingId($id)
+  {
+      Auth::loginUsingId($id);
 
-    return Redirect::home();
+      return Redirect::home();
   }
 }//end class
+
