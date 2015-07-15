@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Http\Requests\UserFormRequest;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
+use DB;
+
 
 
 class UserController extends Controller
@@ -125,5 +127,19 @@ class UserController extends Controller
     Auth::user()->password=Hash::make(Input::get('newpass'));
     Auth::user()->save();
     return Redirect::to('/app/main')->withSuccess('Password has been changed!');
+  }
+
+  public function getSocialSettings(){
+    //$providers = Auth::user()->providers()->get();
+    //dd(SocialAccount::where('user_id','=',Auth::id())->get());
+    $providers = [];
+    $collection = DB::table('social_accounts')
+      ->select('provider')
+      ->where('user_id','=',Auth::id())->get();
+    foreach($collection as $c){
+      $providers[] = $c->provider;
+    }
+    return view('user.settings.socialSettings')->withProviders($providers);
+
   }
 }//end class

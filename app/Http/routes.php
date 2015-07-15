@@ -13,8 +13,6 @@
 
 Route::controller('sociallogin/{provider}', 'SocialAccountsController');
 Route::get('callback/{provider}','SocialAccountsController@handleProviderCallback');
-//Route::get('sociallogin/{provider}/login', 'AuthenticationController@redirectToProvider');
-
 Route::post('socialRegister','SocialAccountsController@socialRegistration');
 
 Route::get('test',function(){
@@ -78,12 +76,6 @@ Route::get('/', array('as'=>'home', 'uses'=> function()
 
   Route::controller('user','UserController');
 
-//TODO:  Is this still being used?
-  /* Ajax forms to handle form submisison*/
-  Route::get('/user/settings/ajax/forms/{page}',function($page)
-  {
-     return View::make('user.settings.'.$page);
-  });
 
   Route::controller('app', 'AppController');
 

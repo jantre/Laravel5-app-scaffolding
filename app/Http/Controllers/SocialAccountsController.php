@@ -54,6 +54,11 @@ class SocialAccountsController extends Controller
       abort(400,"Something went wrong. Please try again.");
     }
 
+    if(Auth::check()){
+      $SA = $this->createSocialAccount(Auth::id(),$social,$provider);
+      return Redirect::back();
+    }
+
     // Check if ID and provider exist in the socialAccount model.
     $SA = SocialAccount::where('provider_uid','=',$social->getId())->first();
     if($SA) {
@@ -109,11 +114,8 @@ class SocialAccountsController extends Controller
         'status' => 1
       ]);
     }
-    $SA = SocialAccount::create(['provider_uid' => $social->getId(),
-      'provider' => $provider,
-      'user_id' => $user->id,
-      'oauth_token' => $social->token,
-    ]);
+
+    $SA = $this->createSocialAccount($user->id,$social,$provider);
     Session::forget('social');
     Session::forget('provider');
 
@@ -122,5 +124,16 @@ class SocialAccountsController extends Controller
     Auth::loginUsingId($SA->user_id);
 
     return Redirect::home();
+  }
+
+  private function createSocialAccount($user_id,$social,$provider){
+    $SA = SocialAccount::firstOrNew(['provider_uid' => $social->getId(),
+      'provider' => $provider,
+      'user_id' => $user_id,
+    ]);
+    $SA->oauth_token= $social->token;
+    $SA->save();
+
+    return $SA;
   }
 }
