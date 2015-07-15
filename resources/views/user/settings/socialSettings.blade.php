@@ -8,7 +8,9 @@ $listedProviders = ['facebook','google'];
             <div class="social-wrapper col-xs-4 col-lg-4">
                     <i class="btn btn-{{$lp}} fa fa-{{$lp}}"></i>
                 </a> <b>Connected with {{ ucfirst($lp) }}</b>
+                <!-- TODO: Implement disconnect
                 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" >Disconnect</a>
+                -->
             </div>
 
         @else
