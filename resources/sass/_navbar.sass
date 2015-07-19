@@ -1,17 +1,4 @@
 /* Mobile */
-.navbar
-  height: 50px
-  text-align: center
-  font-family: $altFont
-
-.navbar-brand
-  padding-top: 10px
-  font-size: 26px
-  a
-    color: $primaryRed !important
-    img
-      width: 100px 
-
 .header-login
   float: right
   .link
@@ -42,8 +29,54 @@
   .form-title
     display: none !important
 
-
 +respond-to(desktop)
+  .navbar-default
+    background-color: #6D6E70 !important
+    font-weight: bold
+    .navbar-btn
+      margin: 0px
+  .navbar
+    .login-form-wrapper
+      margin-top: 5px
+      float: right
+      input[type='text'],input[type='password']
+        width: 160px
+        float: left
+        margin-right: 7px
+      input[type='checkbox']
+        width: auto !important
+      .form-signin-heading
+        display: none
+      .links
+        float: left
+        div
+          width: 165px
+          display: inline-block
+        .remembermewrapper
+          float: none
+          margin: 0px
+          clear: none
+    .dropdown-toggle
+      cursor: pointer
+    .navbar-nav
+      li>a
+        padding-top: 10px
+        padding-bottom: 10px
+      /* Override bootstrap's default min-width: 160 */
+      min-width: 0px !important
+      .list-group-item
+        border: 0px
+    .navbar-link-right
+      float: right
+    .dropdown-menu-right
+      float: right
+      margin-top: 20px
+      font-size: 17px
+      margin-right: 60px
+    .navbar-toggle-left
+      float: left
+      margin-left: 15px
+
   .landing-login-form-block,.login-form-block
     padding-top: 0px
     display: block !important
@@ -75,17 +108,6 @@
       li
         margin-top: 0px
         margin-bottom: 0px
-  .navbar
-    font-family: $altFont
-    text-align: left
-    margin: auto
-    padding: 5px
-    height: $navbarHeight
-    max-width: $maxPageWidth
-  .navbar-brand
-    display: block
-    float: left
-    margin-left: 20px
 
 
   #user-menu-wrapper

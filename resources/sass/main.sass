@@ -3,6 +3,7 @@
 @import 'footer'
 @import 'notifications'
 @import 'social'
+@import 'navbar'
 
 
 ul
@@ -28,6 +29,7 @@ html
   position: relative
   min-height: 100%
 body
+  font-family: 'Museo Sans',Arial,Helvetica,sans-serif
   margin-bottom: 60px
 /* End footer requirements */
 
@@ -49,47 +51,6 @@ body > .container
   padding: 20px 15px 0
   overflow-x: hidden
 
-.navbar-default
-  background-color: #fff
-.navbar
-  .login-form-wrapper
-    margin-top: 5px
-    float: right
-    input[type='text'],input[type='password']
-      width: 160px
-      float: left
-      margin-right: 7px
-    input[type='checkbox']
-      width: auto !important
-    .form-signin-heading
-      display: none
-    .links
-      float: left
-      div
-        width: 165px
-        display: inline-block
-      .remembermewrapper
-        float: none
-        margin: 0px
-        clear: none
-  .dropdown-toggle
-    cursor: pointer
-  .navbar-nav
-    /* Override bootstrap's default min-width: 160 */
-    min-width: 0px !important
-    .list-group-item
-      border: 0px
-  .navbar-link-right
-    float: right
-  .dropdown-menu-right
-    float: right
-    margin-top: 20px
-    font-size: 17px
-    margin-right: 60px
-  .navbar-toggle-left
-    float: left
-    margin-left: 15px
-
   .fl
     float: left
 
@@ -100,3 +61,18 @@ body > .container
   float: right
   clear: both
   margin: 10px 10px
+
+button
+  color: white !important
+  font-weight: bold !important
+  text-shadow: 0 -1px 1px #6d9796 !important
+  background: #89c1c0 !important
+  background: -moz-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#89c1c0),color-stop(100%,#6d9796)) !important
+  background: -webkit-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
+  background: -o-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
+  background: -ms-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
+  background: linear-gradient(to bottom,#89c1c0 0%,#6d9796 100%) !important
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important
+  border-color: #6c9494 !important
+  text-transform: uppercase
