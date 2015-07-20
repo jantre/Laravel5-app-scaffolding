@@ -13,17 +13,31 @@ ul
   border-bottom: 1px solid $borderGray
   height: 2px
 
-.panel-info
+.panel
+  box-shadow: 0 0 1em rgba(0,0,0,.25)
+.panel-heading
+  color: white
+  background-color: $headerGray
+.panel-signup,.panel-signin,.panel-forgot
+  background-color: $formGray
   input[type='text'],input[type='password'],input[type='password']
     width: 100%
     margin: 4px 0px
   input[type='submit']
-    float: right
-    min-width: 40%
-.panel-footer-white
-  background-color: white
-
-/* Required for footer to be pushed to bottom*/
+    width: 100%
+  .panel-footer
+    background-color: $headerGray
+    color: white
+    text-align: center
+  .connect-with-text
+    font-size: 14px
+    text-align: center
+    padding: 0px 0px 10px 0px
+    text-transform: uppercase
+.panel-forgot
+  input
+    margin-top: 10px
+/* The following is required for footer to be pushed to bottom*/
 
 html
   position: relative
@@ -34,10 +48,11 @@ body
 /* End footer requirements */
 
 .center-block
-  float: none 
+  float: none
 
 .link
-  color: $linkColor !important
+  color: $linkColor
+  font-weight: bold
   &:hover
     color: $linkHoverColor !important
     -webkit-transition: color 0.33s
@@ -58,11 +73,9 @@ body > .container
     margin-right: 20px
 
 .remembermewrapper
-  float: right
-  clear: both
-  margin: 10px 10px
+  margin: -2px 0px
 
-button
+button, .button
   color: white !important
   font-weight: bold !important
   text-shadow: 0 -1px 1px #6d9796 !important

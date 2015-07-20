@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand hidden-xs" href="/"><span class='link'>Laravel Application</span></a>
+      <a class="navbar-brand hidden-xs" href="/"><span'>Laravel Application</span></a>
         <button type="button" class="navbar-toggle navbar-toggle-left collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -24,7 +24,7 @@
                       <a href="/admin"><button class="btn btn-sm btn-danger">Admin</button></a>
                   </div>
               @endif
-            <div class="navbar-link-right dropdown-toggle link hidden-xs" type="button" data-toggle="dropdown" aria-expanded="true">
+            <div class="navbar-link-right dropdown-toggle hidden-xs" type="button" data-toggle="dropdown" aria-expanded="true">
               {{ Auth::user()->username }}
               <span class="caret"></span>
             </div>

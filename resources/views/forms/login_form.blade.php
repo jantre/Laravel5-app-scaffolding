@@ -5,13 +5,13 @@
   {!! Form::label('password','Password',array('class'=>'sr-only')) !!}
   {!! Form::password('password',array('placeholder'=>'Password','class'=>'new form-control','required'=>'')) !!}</li>
 
-  {!! Form::submit('Sign In', array('class' => 'btn btn-sm btn-info')) !!}
+  {!! Form::submit('Log In', array('class' => 'btn btn-sm button')) !!}
 {!! Form::close() !!}
 <div class="links">
-  <div class='remembermewrapper'>
+  <div class="col-xs-12 col-sm-6 col-md-6 remembermewrapper">
     <input type="checkbox" name='rememberme' value="rememberme" class='remembermechk' checked='checked'><span class='link remembermespan'> Remember me</span>
   </div>
-  <div>
+  <div class="col-xs-12 col-sm-6 col-md-6">
     <a href='/password/forgot' class='link'>Forgot Password?</a>
   </div>
 </div>
