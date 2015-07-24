@@ -13,10 +13,10 @@
 
          <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/login"><button type="button" class="btn btn-default navbar-btn">Log in</button></a>
+                <a href="/login"><button type="button" class="btn button">Log in</button></a>
             </li>
             <li>
-                <a href="/signup"><button type="button" class="btn btn-default navbar-btn">Sign up</button></a>
+                <a href="/signup"><button type="button" class="btn button">Sign up</button></a>
             </li>
         </ul>
     </div>

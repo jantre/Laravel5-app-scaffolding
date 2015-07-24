@@ -58,7 +58,7 @@ class UserController extends Controller
 
     public function getChangePassword()
     {
-        return view('user.settings.changepassword');
+        return view('user.settings.changePassword');
     }
 
     public function getProfile()

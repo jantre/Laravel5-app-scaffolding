@@ -5,7 +5,6 @@
 @import 'social'
 @import 'navbar'
 
-
 ul
   list-style: none
   padding: 0px
@@ -13,22 +12,21 @@ ul
   border-bottom: 1px solid $borderGray
   height: 2px
 
-.panel
-  box-shadow: 0 0 1em rgba(0,0,0,.25)
 .panel-heading
   color: white
   background-color: $headerGray
-.panel-signup,.panel-signin,.panel-forgot
+  border-top-right-radius: 5px
+  border-top-left-radius: 5px
+.panel-title
+  font-weight: bold
+.panel
+  box-shadow: 0 0 1em rgba(0,0,0,.25)
   background-color: $formGray
   input[type='text'],input[type='password'],input[type='password']
     width: 100%
     margin: 4px 0px
   input[type='submit']
     width: 100%
-  .panel-footer
-    background-color: $headerGray
-    color: white
-    text-align: center
   .connect-with-text
     font-size: 14px
     text-align: center
@@ -37,6 +35,19 @@ ul
 .panel-forgot
   input
     margin-top: 10px
+.panel-footer
+  background-color: $headerGray
+  color: white
+  text-align: center
+  border-bottom-right-radius: 5px
+  border-bottom-left-radius: 5px
+.panel-default
+  .panel-footer
+    background-color: $formGray
+    color: black
+.button-cancel
+  width: 100%
+  margin-top: 10px
 /* The following is required for footer to be pushed to bottom*/
 
 html
@@ -75,17 +86,32 @@ body > .container
 .remembermewrapper
   margin: -2px 0px
 
-button, .button
-  color: white !important
-  font-weight: bold !important
-  text-shadow: 0 -1px 1px #6d9796 !important
-  background: #89c1c0 !important
-  background: -moz-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
-  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#89c1c0),color-stop(100%,#6d9796)) !important
-  background: -webkit-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
-  background: -o-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
-  background: -ms-linear-gradient(top,#89c1c0 0%,#6d9796 100%) !important
-  background: linear-gradient(to bottom,#89c1c0 0%,#6d9796 100%) !important
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important
-  border-color: #6c9494 !important
+.button:hover
+  color: white
+
+button, .button, .button:active
+  color: #fff !important
+  font-weight: bold
+  text-shadow: 0 -1px 1px #6d9796
+  background: #89c1c0
+  background: -moz-linear-gradient(top,#89c1c0 0%,#6d9796 100%)
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#89c1c0),color-stop(100%,#6d9796))
+  background: -webkit-linear-gradient(top,#89c1c0 0%,#6d9796 100%)
+  background: -o-linear-gradient(top,#89c1c0 0%,#6d9796 100%)
+  background: -ms-linear-gradient(top,#89c1c0 0%,#6d9796 100%)
+  background: linear-gradient(to bottom,#89c1c0 0%,#6d9796 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false)
+  border-color: #6c9494
   text-transform: uppercase
+
+.button-cancel, .button-cancel:active
+  background: #f14c2e
+  background: -moz-linear-gradient(top,#f14c2e 0%,#d8452e 100%)
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#f14c2e),color-stop(100%,#d8452e))
+  background: -webkit-linear-gradient(top,#f14c2e 0%,#d8452e 100%)
+  background: -o-linear-gradient(top,#f14c2e 0%,#d8452e 100%)
+  background: -ms-linear-gradient(top,#f14c2e 0%,#d8452e 100%)
+  background: linear-gradient(to bottom,#f14c2e 0%,#d8452e 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false)
+  border: 1px solid #e0452f
+
